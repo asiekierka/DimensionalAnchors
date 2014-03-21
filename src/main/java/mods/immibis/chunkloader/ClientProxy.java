@@ -6,6 +6,7 @@ import java.util.EnumSet;
 import mods.immibis.chunkloader.LoadedChunkDisplay.LoaderDisplay;
 import mods.immibis.core.api.APILocator;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiChat;
 import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.settings.KeyBinding;
@@ -14,7 +15,11 @@ import net.minecraftforge.common.MinecraftForge;
 
 import org.lwjgl.opengl.GL11;
 
+import cpw.mods.fml.client.FMLClientHandler;
+import cpw.mods.fml.client.registry.ClientRegistry;
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.InputEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
@@ -28,38 +33,11 @@ public class ClientProxy extends BaseProxy
 		onRenderWorldLast(evt.context, evt.partialTicks);
 	}
 	
-	@Override
-	public void load() {
-		seeChunksKey = new KeyBinding("Show force-loaded chunks", org.lwjgl.input.Keyboard.KEY_F9);
-		
-		MinecraftForge.EVENT_BUS.register(this);
-		KeyBindingRegistry.registerKeyBinding(new KeyHandler(new KeyBinding[] {seeChunksKey}, new boolean[] {false}) {
+	@SubscribeEvent
+	public void keyEvent(InputEvent.KeyInputEvent ke) {
+		if (FMLClientHandler.instance().isGUIOpen(GuiChat.class));
 			
-			@Override
-			public String getLabel() {
-				return "Key binding: Show force-loaded chunks";
-			}
-			
-			@Override
-			public EnumSet<TickType> ticks() {
-				return EnumSet.of(TickType.RENDER);
-			}
-			
-			@Override
-			public void keyUp(EnumSet<TickType> types, KeyBinding kb, boolean tickEnd) {
-			}
-			
-			@Override
-			public void keyDown(EnumSet<TickType> types, KeyBinding kb, boolean tickEnd, boolean isRepeat) {
-				if(tickEnd)
-					keyboardEvent(kb);
-			}
-		});
-	}
-	
-	@Override
-	public void keyboardEvent(Object key) {
-		if(key == seeChunksKey) {
+		if(seeChunksKey.isPressed()) {
 			showingChunks = !showingChunks;
 			if(showingChunks) {
 				APILocator.getNetManager().sendToServer(new PacketShowChunksRequest());
@@ -67,6 +45,15 @@ public class ClientProxy extends BaseProxy
 				loadedChunkDisplay = null;
 			}
 		}
+	}
+	
+	@Override
+	public void load() {
+		seeChunksKey = new KeyBinding("Show force-loaded chunks", org.lwjgl.input.Keyboard.KEY_F9, "key.immibis.show_chunks");
+		
+		MinecraftForge.EVENT_BUS.register(this);
+		ClientRegistry.registerKeyBinding(seeChunksKey);
+		FMLCommonHandler.instance().bus().register(this);
 	}
 	
 	@SideOnly(Side.CLIENT)

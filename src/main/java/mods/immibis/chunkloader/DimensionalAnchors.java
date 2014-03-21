@@ -38,7 +38,7 @@ import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Property;
 import net.minecraftforge.event.world.WorldEvent;
-import cpw.mods.fml.common.IPlayerTracker;
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
@@ -46,6 +46,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.event.FMLServerStoppingEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.PlayerEvent;
 import cpw.mods.fml.common.network.IGuiHandler;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -57,7 +58,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 	description="Yet another chunkloader mod.",
 	authors="immibis"
 	)
-public class DimensionalAnchors extends PortableBaseMod implements IPlayerTracker {
+public class DimensionalAnchors extends PortableBaseMod {
 
 	// IDEAS
 	// * Let a redstone signal deactivate the chunk loader, removing it from the quota.
@@ -281,7 +282,7 @@ public class DimensionalAnchors extends PortableBaseMod implements IPlayerTracke
 			throw new RuntimeException("FIX ME - No ChunkLoadInterface!");
 
 		MinecraftForge.EVENT_BUS.register(this);
-		GameRegistry.registerPlayerTracker(this);
+		FMLCommonHandler.instance().bus().register(this);
 
 		GameRegistry.registerTileEntity(TileChunkLoader.class, "immibis.chunkloader.TileChunkLoader");
 		enableClockTicks(true);
@@ -551,20 +552,17 @@ public class DimensionalAnchors extends PortableBaseMod implements IPlayerTracke
 				System.out.println("Overworld not available, ignoring setWorldForceLoaded("+world.provider.dimensionId+", "+state+")");
 	}
 	
-	@Override public void onPlayerChangedDimension(EntityPlayer player) {}
-	@Override public void onPlayerRespawn(EntityPlayer player) {}
-	
-	@Override
-	public void onPlayerLogin(EntityPlayer player) {
+	@SubscribeEvent
+	public void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
 		if(requireOnline)
 			for(WorldLoaderList l : worlds.values())
-				l.onPlayerLogin(player.username);
+				l.onPlayerLogin(event.player.getCommandSenderName());
 	}
 	
-	@Override
-	public void onPlayerLogout(EntityPlayer player) {
+	@SubscribeEvent
+	public void onPlayerLogout(PlayerEvent.PlayerLoggedOutEvent event) {
 		if(requireOnline)
 			for(WorldLoaderList l : worlds.values())
-				l.onPlayerLogout(player.username);
+				l.onPlayerLogout(event.player.getCommandSenderName());
 	}
 }

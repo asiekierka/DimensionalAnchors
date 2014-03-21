@@ -43,6 +43,14 @@ minecraft {
     version = "1.7.2-10.12.0.1047"
     assetDir = "eclipse/assets"
 }
+
+jar {
+    manifest {
+        attributes 'FMLCorePlugin': 'mods.immibis.chunkloader.coremod.DimensionalAnchorsCoremod'
+        attributes 'FMLCorePluginContainsFMLMod': 'true'
+    }
+}
+
 processResources
 {
     // replace stuff in mcmod.info, nothing else

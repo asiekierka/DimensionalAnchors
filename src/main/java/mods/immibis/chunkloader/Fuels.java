@@ -30,9 +30,9 @@ public class Fuels {
 					String block_damage = block_name.substring(block_name.lastIndexOf(":")+1);
 					block_name = block_name.substring(0, block_name.lastIndexOf(":"));
 					if(block_damage.equalsIgnoreCase("any"))
-						set(Block.getBlockFromName(block_name), Integer.parseInt(id_value));
+						set((Item)Item.itemRegistry.getObject(block_name), Integer.parseInt(id_value));
 					else
-						set(Block.getBlockFromName(block_name), Integer.parseInt(block_damage), Integer.parseInt(id_value));
+						set((Item)Item.itemRegistry.getObject(block_name), Integer.parseInt(block_damage), Integer.parseInt(id_value));
 				}
 			} catch(Exception e) {
 				e.printStackTrace();

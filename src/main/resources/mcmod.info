@@ -1,6 +1,4 @@
-{
-	"modinfoversion": 2,
-	"modlist": [
+[
 		{
 			"authors": [
 				"immibis"
@@ -26,4 +24,3 @@
 			"version": "57.1.95"
 		}
 	]
-}

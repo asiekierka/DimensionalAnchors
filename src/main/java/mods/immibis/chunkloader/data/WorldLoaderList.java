@@ -121,9 +121,9 @@ public class WorldLoaderList extends WorldSavedData {
 		recentlyRemovedLoaders.clear();
 		
 		{
-			NBTTagList list = var1.getTagList("loaders");
+			NBTTagList list = var1.getTagList("loaders", 10);
 			for(int k = 0; k < list.tagCount(); k++) {
-				NBTTagCompound c = (NBTTagCompound)list.tagAt(k);
+				NBTTagCompound c = (NBTTagCompound)list.getCompoundTagAt(k);
 				Loader loader = new Loader(c, this);
 				loaders.add(loader);
 				loader.added = true;
@@ -136,9 +136,9 @@ public class WorldLoaderList extends WorldSavedData {
 		}
 		
 		{
-			NBTTagList list = var1.getTagList("duq");
+			NBTTagList list = var1.getTagList("duq", 10);
 			for(int k = 0; k < list.tagCount(); k++) {
-				NBTTagCompound c = (NBTTagCompound)list.tagAt(k);
+				NBTTagCompound c = (NBTTagCompound)list.getCompoundTagAt(k);
 				long time = c.getLong("time");
 				int x = c.getInteger("x");
 				int z = c.getInteger("z");
@@ -148,9 +148,9 @@ public class WorldLoaderList extends WorldSavedData {
 		}
 		
 		{
-			NBTTagList list = var1.getTagList("rrl");
+			NBTTagList list = var1.getTagList("rrl", 10);
 			for(int k = 0; k < list.tagCount(); k++) {
-				NBTTagCompound c = (NBTTagCompound)list.tagAt(k);
+				NBTTagCompound c = (NBTTagCompound)list.getCompoundTagAt(k);
 				long time = c.getLong("max_time");
 				Loader loader = new Loader(c, this);
 				recentlyRemovedLoaders.add(new RemovedLoaderEntry(time, loader));

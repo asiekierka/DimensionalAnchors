@@ -67,9 +67,9 @@ public class Loader {
 		coveredChunks = new HashSet<ChunkCoordIntPair>();
 		
 		if(tag.hasKey("chunks")) {
-			NBTTagList list = tag.getTagList("chunks");
+			NBTTagList list = tag.getTagList("chunks", 10);
 			for(int k = 0; k < list.tagCount(); k++) {
-				NBTTagCompound coords = (NBTTagCompound)list.tagAt(k);
+				NBTTagCompound coords = (NBTTagCompound)list.getCompoundTagAt(k);
 				coveredChunks.add(new ChunkCoordIntPair(coords.getInteger("x"), coords.getInteger("z")));
 			}
 			

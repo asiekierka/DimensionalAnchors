@@ -1,0 +1,29 @@
+{
+	"modinfoversion": 2,
+	"modlist": [
+		{
+			"authors": [
+				"immibis"
+			],
+			"credits": "",
+			"dependants": [],
+			"dependencies": [
+				"ImmibisCore"
+			],
+			"description": "Yet another chunkloader mod.",
+			"logoFile": "",
+			"mcversion": "1.6.4",
+			"modid": "DimensionalAnchors",
+			"name": "Dimensional Anchors",
+			"parent": "",
+			"requiredMods": [
+				"ImmibisCore"
+			],
+			"screenshots": [],
+			"updateUrl": "",
+			"url": "http://www.minecraftforum.net/topic/1001131-110-immibiss-mods-smp/",
+			"useDependencyInformation": "true",
+			"version": "57.1.95"
+		}
+	]
+}

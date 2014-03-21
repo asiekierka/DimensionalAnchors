@@ -1,0 +1,234 @@
+57.1.95:
+* Removed debug spam. Again.
+
+57.1.94:
+* More fixes related to other worlds.
+
+57.1.93:
+* Dimensional Anchors can now be moved by MFFS Force Manipulators without breaking.
+* Made the chunk boundary overlay slightly darker.
+* If you break a DA with fuel in it, it drops the fuel instead of destroying it.
+
+57.1.92:
+* Fixed error and "data lost; report this bug" on startup. Sorry!
+
+57.1.91:
+* Fixed worlds not being loaded on startup.
+
+57.1.9:
+* Remembered to disable debug spam.
+* Marked as compatible with all versions 57.1.X. If you install this version on a server, and clients have an earlier version, they will not need to update.
+
+57.1.8:
+* Fixed more problems with Applied Energistics, Thermal Expansion, probably others.
+* Hopefully this fixed the root cause of all the problems.
+
+57.1.7:
+* Possibly fixed "NullPointerException in LinkedHashMap.create" when exiting dimensions (could not reproduce here).
+
+57.1.6:
+* Fixed DA unloading and reloading chunks in the same tick.
+
+57.1.5:
+* Fixed a non-fatal exception when loading old worlds.
+
+57.1.4:
+* Actually removed debug spam.
+
+57.1.3:
+* Fixed more crashing (AssertionError: unref with refcount already 0).
+
+57.1.2:
+* Possible fix for crash (NPE in ChunkProviderServer).
+* Removed debug spam.
+
+57.1.1:
+* Added debug spam to investigate the crashing issue.
+
+57.1.0:
+* Added config option chunkloader.requireOnline. If true, chunk loaders owned by offline players will not work.
+* Opped players can set chunk loaders bigger than 9x9.
+* The GUI will not stop you setting a chunk loader bigger than you are allowed, but if you do, it will not load chunks.
+* Chunk loaders that are deactivated for another reason (quota or onlineness) will not use fuel.
+* Significant internal changes - report any bugs.
+  Existing chunk loaders might need to be broken and replaced.
+ 
+
+57.0.0:
+* Updated to Minecraft 1.6.4.
+
+56.0.1:
+* Fixed: previously, if you turned off fuel or decreased the chunk limit, existing loaders would not update when loading the world.
+* Fixed list file not being written.
+
+56.0.0:
+* Updated to Minecraft 1.6.2.
+* Now fully translatable.
+
+55.0.3:
+* Added a safety check to avoid edoreld's crash.
+* Added a safety check to avoid Jalapeno777's crash.
+
+55.0.2:
+* Fixed division by zero if you open the GUI of a chunk loader that is not loading any chunks, and fuel is enabled.
+* Probably fixed problems with Dimensional Doors dimensions.
+
+55.0.1:
+* Now uses SRG names.
+* Removed unnecessary and confusing "chunkloader.quotaType" option.
+* "chunkloader.perplayer.maxChunksPerPlayer" option renamed to just "chunkloader.maxChunksPerPlayer"
+
+55.0.0:
+* Updated to Minecraft 1.5.2.
+
+54.0.0:
+* Updated to Minecraft 1.5.1.
+* Testing something new - might have obfuscation problems.
+
+53.0.0:
+* Updated to Minecraft 1.5.
+* New bug: F9 overlay is broken - need a Forge change or a coremod to fix.
+
+52.2.0:
+* F9 overlay changes:
+  - The blue border is always shown around your current chunk, even if it's not force-loaded.
+  - The blue border around your current chunk is lighter now.
+  - Chunks which are force-loaded by other mods will have a yellow square above them, instead of red.
+  - Chunks which are force-loaded by both DA and another mod will have an orange square above them.
+  - Chunks with multiple chunk loaders force-loading them will not be highlighted in darker red - this was a side effect of internal changes.
+  - Server-owned chunk loaders are highlighted yellowish-green.
+* Added shapes. Currently you can use a square (previously the only option) or a line in either axis.
+* Added a display of the amount of fuel left, if fuel is turned on, in the chunk loader GUI.
+
+52.1.9:
+* Fixed an exploit that could make someone's quota negative, allowing people to load more chunks than they should. (reported by pandypants)
+
+52.1.8:
+* Should fix Mystcraft ages not loading at startup.
+
+52.1.7:
+* Server-owned chunk loaders don't require fuel. (WHY DID I NOT DO THIS EARLIER???)
+
+52.1.6:
+* Removed debug spam.
+
+52.1.5:
+* Should fix crashing when something besides Dimensional Anchors loads chunks at server startup.
+* Added safeguard so if that crash happens again, it will not reset the chunk.
+
+52.1.4:
+* Fixed unloading chunks in eternal day Mystcraft ages.
+
+52.1.3:
+* Fixed crash when a world is deleted.
+
+52.1.2:
+* Fixed another ConcurrentModificationException
+
+52.1.1:
+* Fixed ConcurrentModificationException
+* Fixed ghost chunk loaders
+
+52.1.0:
+* Now saves a list of worlds with chunk loaders in them, and loads
+  these worlds at startup.
+* Removed code to double-check which worlds are loaded every tick.
+  It should no longer be necessary, and should save a small amount of CPU.
+
+52.0.8:
+* Allowed entities to update in force-loaded chunks.
+
+52.0.7:
+* Fixed crash when moving anchors on frames.
+
+52.0.6:
+* Fixed crash when loading a world for the second time.
+* Fixed a possible memory leak.
+
+52.0.5:
+* Recompiled with Java 6.
+
+52.0.4:
+* Fixed a reobfuscation problem that was causing crashes (java.lang.NoClassDefFoundError: net/minecraft/server/management/DA_DefaultPackageProxy)
+
+52.0.3:
+* Fixed packaging again.
+
+52.0.2:
+* Fixed mcmod.info
+
+52.0.1:
+* Fixed packaging.
+
+52.0.0:
+* Updated to 1.4.6.
+
+51.0.5:
+* If Forge refuses to give DA a chunk loading ticket, it will crash immediately, instead of silently not working then crashing when you unload the world.
+* Should handle world unloading in a more sane way.
+
+51.0.4:
+* Possible fix for a bug when an anchor runs out of fuel.
+
+51.0.3:
+* Fixed crash with updated Forge.
+
+51.0.2:
+* Removed debug messages (again).
+* Chunk loaders should unload chunks properly if they run out of fuel and no players are nearby (and no other mods are keeping the chunks loaded)
+* "/dimanc setpipemode" now updates the config file.
+
+51.0.1:
+* Removed debug messages.
+* Fixed GUI.
+* Increased default chunk limit to 9.
+
+51.0.0:
+* Updated to 1.4.5.
+* Ended support for 1.2.5, 1.3.2 and 1.4.2.
+
+50.2.1:
+* Fixed immediate crashing.
+* Fixed fuel meter sometimes getting stuck.
+
+50.2.0:
+* Updated to 1.4.2.
+
+50.1.2:
+* Fixed crashing when trying to get the mod version in 1.2.5.
+
+50.1.1:
+* Changed nothing, because I derped.
+
+50.1.0:
+* Added optional fuel requirement.
+* Added some op commands (1.3.2 only) under /dimanc
+* Added "/dimanc getquota" to see another player's quota
+* Added "/dimanc override" to set a player override from in-game without restarting.
+* Added "/dimanc setfuel" to set/remove chunkloader fuels from in-game without restarting.
+* Added "/dimanc setpipemode" to enable/disable fuel piping TEMPORARILY from in-game without restarting.
+* Fixed a possible bug with overlapping loaders.
+* Added config option to allow or disallow fuel from pipes.
+
+50.0.1:
+* Some config options renamed (chunkloader.maxQuota is now chunkloader.perplayer.maxChunksPerPlayer)
+* For unlimited quota, set chunkloader.quotaType=unlimited
+* Per-player overrides added to config. In immibis.cfg, section chunkloader.playerQuotaOverride,
+  add entries of the form: '<username (lowercase)>=<number of chunks they can have loaded>'
+  or '<username (lowercase)>=unlimited' (without the <> or '')
+  This overrides everything else including ops having unlimited quota.
+
+50.0.0pr2:
+* Untested (!) update to 1.3.2 chunk loading. 
+
+50.0.0pr1:
+* Changed version numbering scheme.
+* Mostly updated to 1.3.2, but still waiting on a Forge hook for chunk loading.
+
+Rev4:
+* Started changelog
+* Fixed loaders set to (server) resetting on world load
+* Made chunk loaders load chunks when they are created, instead of assuming
+  they're already loaded by a nearby player.
+* Fixed constant loading and unloading if two worlds have the same
+  dimension number on Bukkit.

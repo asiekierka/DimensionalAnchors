@@ -62,7 +62,7 @@ public class ContainerChunkLoader extends BaseContainer<TileChunkLoader> {
 			}
 		} else if(i == 5 && amIOp) {
 			if(tile.getLoader().getOwner().equals(Owner.SERVER_OWNER_STRING))
-				tile.getLoader().setOwner(Owner.getPlayerOwnerString(player.getCommandSenderName()));
+				tile.getLoader().setOwner(Owner.getPlayerOwnerString(player.getGameProfile().getName()));
 			else
 				tile.getLoader().setOwner(Owner.SERVER_OWNER_STRING);
 		
@@ -93,8 +93,8 @@ public class ContainerChunkLoader extends BaseContainer<TileChunkLoader> {
 	public void updateFields() {
 		maxQuota = getMaxQuota();
 		curQuota = getCurQuota();
-		canEdit = tile.getLoader().canEditBy(player.getCommandSenderName(), amIOp);
-		amIOp = SidedProxy.instance.isOp(player.getCommandSenderName());
+		canEdit = tile.getLoader().canEditBy(player.getGameProfile().getName(), amIOp);
+		amIOp = SidedProxy.instance.isOp(player.getGameProfile().getName());
 		fuelEndTime = tile.calcFuelEndTime();
 		isActive = tile.getLoader().isActive();
 	}
@@ -136,7 +136,6 @@ public class ContainerChunkLoader extends BaseContainer<TileChunkLoader> {
 		}
 		
 		PacketGUIUpdate packet = new PacketGUIUpdate(tile.getLoader().getOwner(), curQuota, maxQuota, tile.radius, amIOp, canEdit, tile.shape, fuelEndTime, isActive);
-
 		sendUpdatePacket(packet);
 		
 		lastOwner = tile.getLoader().getOwner();
@@ -164,5 +163,4 @@ public class ContainerChunkLoader extends BaseContainer<TileChunkLoader> {
 			fuelEndTime = p.fuelEndTime;
 		}
 	}
-	
 }

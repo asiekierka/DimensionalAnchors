@@ -52,12 +52,12 @@ public class PacketShowChunksResponse implements IPacket {
 			if(from.getDistanceSq(li.getPos().x, li.getPos().y, li.getPos().z) > radius*16*2)
 				continue;
 			LoaderType type = LoaderType.OWNED_BY_OTHER;
-			if(li.getOwner().equals(Owner.getPlayerOwnerString(from.getCommandSenderName())))
+			if(li.getOwner().equals(Owner.getPlayerOwnerString(from.getGameProfile().getName())))
 				type = LoaderType.OWNED_BY_ME;
 			if(li.getOwner().equals(Owner.SERVER_OWNER_STRING))
 				type = LoaderType.OWNED_BY_SERVER;
 			
-			if(type != LoaderType.OWNED_BY_ME && !DimensionalAnchors.showOtherPlayersLoaders && !SidedProxy.instance.isOp(from.getCommandSenderName()))
+			if(type != LoaderType.OWNED_BY_ME && !DimensionalAnchors.showOtherPlayersLoaders && !SidedProxy.instance.isOp(from.getGameProfile().getName()))
 				continue;
 			
 			LoaderDisplay ld = new LoaderDisplay();

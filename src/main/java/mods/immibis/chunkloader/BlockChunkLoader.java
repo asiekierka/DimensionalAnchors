@@ -34,7 +34,7 @@ public class BlockChunkLoader extends BlockContainer {
 			return false;
 		if(w.isRemote)
 			return true;
-		Logging.onRemoved(tcl.getLoader(), player.getCommandSenderName());
+		Logging.onRemoved(tcl.getLoader(), player.getGameProfile().getName());
 		return true;
 	}
 	
@@ -45,7 +45,7 @@ public class BlockChunkLoader extends BlockContainer {
 			return;
 		TileChunkLoader tile = (TileChunkLoader)w.getTileEntity(x, y, z);
 		if(player instanceof EntityPlayer)
-			tile.onPlaced(Owner.getPlayerOwnerString(((EntityPlayer)player).getCommandSenderName()));
+			tile.onPlaced(Owner.getPlayerOwnerString(((EntityPlayer)player).getGameProfile().getName()));
 		else
 			tile.onPlaced(Owner.NON_PLAYER_STRING);
 	}

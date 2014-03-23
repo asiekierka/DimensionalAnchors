@@ -36,7 +36,7 @@ repositories {
 
 dependencies {
     compile 'junit:junit:4.11'
-    compile 'mods.immibis.core:ImmibisCore:58.0.0:deobf'
+    compile 'mods.immibis.core:ImmibisCore:58.0.2:deobf'
 }
 
 minecraft {

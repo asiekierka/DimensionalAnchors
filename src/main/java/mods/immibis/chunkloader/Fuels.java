@@ -6,9 +6,12 @@ import java.util.Map;
 
 import mods.immibis.core.Config;
 import net.minecraft.block.Block;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 
@@ -163,12 +166,9 @@ public class Fuels {
 	
 	
 	static void addCommands() {
-		// TODO: readd setfuel
-		/* DimensionalAnchors.commands.put("setfuel", new Command() {
+		DimensionalAnchors.commands.put("setfuel", new Command() {
 			@Override
 			public void invoke(CommandUser cs, String[] args, int nextarg) {
-				if(args.length <= nextarg) {cs.send("\u00a7cNot enough arguments."); return;}
-				String idstr = args[nextarg++];
 				if(args.length <= nextarg) {cs.send("\u00a7cNot enough arguments."); return;}
 				String timestr = args[nextarg++];
 				
@@ -177,22 +177,18 @@ public class Fuels {
 					unitstr = args[nextarg++];
 			
 				int time;
-				int id;
-				int meta = 0;
-				boolean useMeta = false;
 				
-				String[] idparts = idstr.split(":");
-				if(idparts.length != 1 && idparts.length != 2) {
-					cs.send("\u00a7cInvalid ID/metadata: "+idstr);
+				EntityPlayerMP player = MinecraftServer.getServer().getConfigurationManager().getPlayerForUsername(cs.getName());
+				if(player == null) {
+					cs.send("\u00a7cThis command can only be used by a Player!");
 					return;
+				}
+				ItemStack stack = player.inventory.getCurrentItem();
+				if(stack == null || stack.stackSize == 0 || stack.getItem() == null) {
+					cs.send("\u00a7cYou need to hold an Item to do this!");
 				}
 				
 				try {
-					id = Integer.parseInt(idparts[0]);
-					if(idparts.length > 1) {
-						meta = Integer.parseInt(idparts[1]);
-						useMeta = true;
-					}
 					time = Integer.parseInt(timestr);
 				} catch(NumberFormatException e) {
 					cs.send("\u00a7cInvalid number");
@@ -210,14 +206,12 @@ public class Fuels {
 					return;
 				}
 				
-				if(useMeta)
-					set(id, meta, time);
-				else
-					set(id, time);
+				
+				set(stack.getItem(), stack.getItemDamage(), time);
 				
 				save();
 				
-				cs.send("\u00a7bChunk-loading time for "+(useMeta ? id+":"+meta : String.valueOf(id))+" set to "+time+" ticks");
+				cs.send("\u00a7bChunk-loading time for "+stack.getDisplayName()+" set to "+time+" ticks");
 				cs.send("\u00a7bThis will not affect currently burning items.");
 			}
 			
@@ -225,7 +219,7 @@ public class Fuels {
 			public String getUsage() {
 				return "/dimanc setfuel <ID>[:<meta>] <time> [sec|min|hr] - use time=0 to remove a fuel"; 
 			}
-		}); */
+		}); 
 		
 		DimensionalAnchors.commands.put("setpipemode", new Command() {
 			@Override

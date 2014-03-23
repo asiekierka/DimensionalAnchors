@@ -16,9 +16,11 @@ import mods.immibis.chunkloader.porting.ChunkLoadInterface132;
 import mods.immibis.core.Config;
 import mods.immibis.core.api.APILocator;
 import mods.immibis.core.api.FMLModInfo;
+import mods.immibis.core.api.net.INetworkingManager;
 import mods.immibis.core.api.net.IPacket;
 import mods.immibis.core.api.porting.PortableBaseMod;
 import mods.immibis.core.api.porting.SidedProxy;
+import mods.immibis.core.impl.net.NetworkingManager;
 import net.minecraft.block.Block;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
@@ -52,7 +54,7 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 
-@Mod(version="57.1.95", modid="DimensionalAnchors", name="Dimensional Anchors", dependencies="required-after:ImmibisCore")
+@Mod(version="58.0.0", modid="DimensionalAnchors", name="Dimensional Anchors", dependencies="required-after:ImmibisCore")
 @FMLModInfo(
 	url="http://www.minecraftforum.net/topic/1001131-110-immibiss-mods-smp/",
 	description="Yet another chunkloader mod.",
@@ -104,7 +106,8 @@ public class DimensionalAnchors extends PortableBaseMod {
 	public static boolean allowFuelPiping;
 
 	public static Map<String, Property> playerQuotaOverride;
-
+	
+	public static INetworkingManager networkingManager;
 	public static @cpw.mods.fml.common.SidedProxy(clientSide="mods.immibis.chunkloader.ClientProxy",serverSide="mods.immibis.chunkloader.BaseProxy") BaseProxy proxy;
 
 	// Checks whether the game is still using this World object
@@ -154,6 +157,11 @@ public class DimensionalAnchors extends PortableBaseMod {
 					@Override
 					public void send(String s) {
 						var1.addChatMessage(new ChatComponentText(s));
+					}
+					
+					@Override
+					public String getName() {
+						return var1.getCommandSenderName();
 					}
 				};
 
@@ -272,6 +280,11 @@ public class DimensionalAnchors extends PortableBaseMod {
 					'I', Blocks.iron_block
 					);
 		}
+		
+		this.networkingManager = APILocator.getNetManager();
+		networkingManager.registerPacket(PacketShowChunksRequest.class);
+		networkingManager.registerPacket(PacketShowChunksResponse.class);
+		networkingManager.registerPacket(PacketGUIUpdate.class);
 	}
 	
 	@EventHandler
@@ -556,13 +569,13 @@ public class DimensionalAnchors extends PortableBaseMod {
 	public void onPlayerLogin(PlayerEvent.PlayerLoggedInEvent event) {
 		if(requireOnline)
 			for(WorldLoaderList l : worlds.values())
-				l.onPlayerLogin(event.player.getCommandSenderName());
+				l.onPlayerLogin(event.player.getGameProfile().getName());
 	}
 	
 	@SubscribeEvent
 	public void onPlayerLogout(PlayerEvent.PlayerLoggedOutEvent event) {
 		if(requireOnline)
 			for(WorldLoaderList l : worlds.values())
-				l.onPlayerLogout(event.player.getCommandSenderName());
+				l.onPlayerLogout(event.player.getGameProfile().getName());
 	}
 }

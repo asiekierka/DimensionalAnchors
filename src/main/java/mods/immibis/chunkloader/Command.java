@@ -16,7 +16,7 @@ public abstract class Command {
 	@SuppressWarnings("unchecked")
 	public EntityPlayer getPlayer(String username) {
 		for(EntityPlayer pl : (List<EntityPlayer>)net.minecraft.server.MinecraftServer.getServer().getConfigurationManager().playerEntityList) {
-			if(pl.getCommandSenderName().equalsIgnoreCase(username))
+			if(pl.getGameProfile().getName().equalsIgnoreCase(username))
 				return pl;
 		}
 		//throw new PlayerNotFoundException();

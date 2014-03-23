@@ -23,6 +23,7 @@ import mods.immibis.core.api.porting.SidedProxy;
 import mods.immibis.core.impl.net.NetworkingManager;
 import net.minecraft.block.Block;
 import net.minecraft.command.CommandBase;
+import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -197,6 +198,12 @@ public class DimensionalAnchors extends PortableBaseMod {
 			public String getCommandUsage(ICommandSender icommandsender) {
 				return "/dimanc help";
 			}
+			
+			@Override
+		    public int compareTo(Object par1Obj)
+		    {
+		        return ((ICommand)par1Obj).getCommandName().compareTo(this.getCommandName());
+		    }
 		});
 	}
 	

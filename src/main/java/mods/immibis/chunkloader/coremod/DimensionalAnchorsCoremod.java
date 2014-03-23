@@ -5,7 +5,6 @@ import java.util.Map;
 import cpw.mods.fml.relauncher.IFMLLoadingPlugin;
 
 public class DimensionalAnchorsCoremod implements IFMLLoadingPlugin {
-
 	@Override
 	public String[] getASMTransformerClass() {
 		return null;
@@ -29,5 +28,4 @@ public class DimensionalAnchorsCoremod implements IFMLLoadingPlugin {
 	public String getAccessTransformerClass() {
 		return "mods.immibis.chunkloader.coremod.DAAccessTransformer";
 	}
-
 }
